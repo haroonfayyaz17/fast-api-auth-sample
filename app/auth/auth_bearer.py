@@ -72,7 +72,6 @@ class JWTBearer(HTTPBearer):
                 return isTokenValid
 
         except Exception as e:
-            print('e: ', e)
             payload = None
         if payload:
             isTokenValid = True

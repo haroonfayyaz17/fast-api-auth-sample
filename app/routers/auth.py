@@ -12,22 +12,6 @@ from app.auth.auth_handler import signJWT
 router = APIRouter(prefix="/auth")
 
 
-@router.get("/", response_model=List[schemas.User],
-            status_code=200,
-            response_model_exclude_unset=True)
-def get_users():
-    # create a new database session
-    db = Session(bind=engine, expire_on_commit=False)
-
-    users = db.query(models.User).filter(
-        models.User.email == "haroonfayyaz5@gmail.com")
-    for user in users:
-        user.is_password_valid = models.User.is_password_valid(
-            '123', user.password)
-    print('users: ', users)
-    return users
-
-
 @router.post("/", status_code=status.HTTP_201_CREATED)
 def create_user(user: schemas.User, response: Response):
     userDb = models.User(**user.dict())
@@ -50,7 +34,6 @@ def create_user(user: schemas.User, response: Response):
 @router.post("/login", status_code=status.HTTP_200_OK)
 def login(user: schemas.UserLogin, response: Response):
     res = models.User.authenticate(**user.dict())
-    print('user: ', res)
 
     if type(res) == str:
         response.status_code = status.HTTP_403_FORBIDDEN
