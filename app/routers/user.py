@@ -8,7 +8,7 @@ router = APIRouter(prefix="/user", dependencies=[Depends(JWTBearer())])
 
 
 @router.get("/", status_code=status.HTTP_200_OK)
-async def get_user(user: dict, request: Request) -> dict:
+async def get_user(request: Request) -> dict:
     token = request.headers["authorization"].split(" ")[1]
     user = decodeJWT(token)
 
