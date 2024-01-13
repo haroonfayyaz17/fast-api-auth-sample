@@ -6,6 +6,7 @@ load_dotenv()
 
 REDIS_HOST = os.getenv('REDIS_HOST')
 REDIS_PORT = os.getenv('REDIS_PORT')
+REDIS_PASSWORD = os.getenv('REDIS_PASSWORD')
 
 redis_cache = redis.Redis(
-    host=REDIS_HOST, port=REDIS_PORT, decode_responses=True)
+    host=REDIS_HOST, port=REDIS_PORT, password=REDIS_PASSWORD, decode_responses=True)
